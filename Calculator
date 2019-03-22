@@ -1,0 +1,98 @@
+package Lesson.Homework;
+
+import javafx.geometry.VerticalDirection;
+
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Calculator {
+    public static void createGUI(){
+
+        // создание окна программы
+        JFrame frame = new JFrame("Калькулятор");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setPreferredSize(new Dimension(200,200));
+        frame.pack();
+        frame.setVisible(true);
+
+        // создание кнопок
+        JButton addition = new JButton("+");
+        JButton substraction = new JButton("-");
+        JButton multiplication = new JButton("*");
+        JButton division = new JButton("/");
+        JButton equal = new JButton("=");
+
+        // добавление кнопок в окно программы
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout()); // объявления метода расположения содержимого внутри окна
+        panel.add(addition);
+        panel.add(substraction);
+        panel.add(division);
+        panel.add(multiplication);
+        panel.add(equal);
+
+        frame.setContentPane(panel); // добавление содержимого в саму программу
+
+        // создание поля ввода
+        JTextField field = new JTextField(5); //в параметре указывается кол-во символов, которое можно ввести
+        frame.add(field); // добавление поля ввода в программу
+
+        ActionListener fieldListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String a =  new String(field.getText());
+               /* field.setText("");
+                String b = field.getText();
+                System.out.println(b); */
+            }
+        };
+
+
+        ActionListener listener1 = new ActionListener() { // создание слушателя(метод, который "слушает", когда нажмут на кнопку
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String a = field.getText(); // описание: какое действие будет выполняться при нажатии на кнопку
+                field.setText("");
+                System.out.println(a);
+
+            }
+
+        };
+
+        addition.addActionListener(listener1);// добавление слушателя в программу
+
+
+        ActionListener listener2 = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final String b = field.getText();
+                System.out.println(b);
+                System.out.println(listener1.toString() + b);
+            }
+        };
+
+        equal.addActionListener(listener2);
+
+        field.addActionListener(fieldListener);
+
+
+
+    }
+
+
+    public static void main(String[] args) {
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                createGUI();
+
+            }
+        });
+    }
+}
+
+
