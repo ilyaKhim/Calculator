@@ -1,16 +1,14 @@
-package Lesson.Homework;
-
-import javafx.geometry.VerticalDirection;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicSplitPaneUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class Calculator {
-    public static void createGUI(){
-
+    public  void createGUI(){
+        final int[] yourNumbers = {0,0};
+        final int[] answer = {0};
         // создание окна программы
         JFrame frame = new JFrame("Калькулятор");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,42 +41,44 @@ public class Calculator {
         ActionListener fieldListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String a =  new String(field.getText());
-               /* field.setText("");
-                String b = field.getText();
-                System.out.println(b); */
+
+
             }
         };
+        field.addActionListener(fieldListener); 
+        
+        
 
-
-        ActionListener listener1 = new ActionListener() { // создание слушателя(метод, который "слушает", когда нажмут на кнопку
+        ActionListener buttonPlus = new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                String a = field.getText(); // описание: какое действие будет выполняться при нажатии на кнопку
-                field.setText("");
-                System.out.println(a);
+                Integer a = new Integer(field.getText());
+                yourNumbers[0] = a;
 
+                
+
+                addition.addActionListener(fieldListener);
+                
+                Integer b = new Integer(field.getText());
+
+                yourNumbers[1] = new Integer(field.getText());
+
+                answer[0] = yourNumbers[0] + yourNumbers[1];
             }
-
         };
 
-        addition.addActionListener(listener1);// добавление слушателя в программу
+        addition.addActionListener(buttonPlus);
 
-
-        ActionListener listener2 = new ActionListener() {
+        ActionListener buttonEqaul = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                final String b = field.getText();
-                System.out.println(b);
-                System.out.println(listener1.toString() + b);
+                String answerString = Arrays.toString(yourNumbers);
+                answerString = answerString.substring(1,answerString.length()-1);
+                field.setText(answerString);
+
             }
         };
-
-        equal.addActionListener(listener2);
-
-        field.addActionListener(fieldListener);
-
-
+        equal.addActionListener(buttonEqaul);
 
     }
 
@@ -88,11 +88,10 @@ public class Calculator {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                createGUI();
+                Calculator main = new Calculator();
+                main.createGUI();
 
             }
         });
     }
 }
-
-
