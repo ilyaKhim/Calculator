@@ -6,9 +6,34 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 public class Calculator {
+
+    private enum Action{
+        PLUS, MINUS, MULTIPLY, DIVIDE, NONE
+    }
+
+    private class Data{
+        private Integer number;
+        private Action whichButton = Action.NONE;
+        public Action getWhichButton() {
+            return whichButton;
+        }
+        public void setWhichButton(Action whichButton) {
+            this.whichButton = whichButton;
+        }
+        public Integer getNumber() {
+            return number;
+        }
+        public void setNumber(Integer number) {
+            this.number = number;
+        }
+    }
     public  void createGUI(){
-        final int[] yourNumbers = {0,0};
-        final int[] answer = {0};
+
+        Integer test = null;
+        int test2 = 0;
+
+        final Data buffer = new Data();
+        //final int[] answer = {0};
         // создание окна программы
         JFrame frame = new JFrame("Калькулятор");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,25 +70,25 @@ public class Calculator {
 
             }
         };
-        field.addActionListener(fieldListener); 
-        
-        
+        field.addActionListener(fieldListener);
+
+
 
         ActionListener buttonPlus = new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 Integer a = new Integer(field.getText());
-                yourNumbers[0] = a;
+                if(buffer.getNumber() == null) {
+                    buffer.setNumber(a);
+                    System.out.println("first press " + buffer.getNumber());
+                } else {
+                    Integer result = a + buffer.getNumber();
+                    System.out.println("second press "  + result);
+                }
 
-                
+                buffer.setWhichButton("+");
 
-                addition.addActionListener(fieldListener);
-                
-                Integer b = new Integer(field.getText());
-
-                yourNumbers[1] = new Integer(field.getText());
-
-                answer[0] = yourNumbers[0] + yourNumbers[1];
             }
         };
 
@@ -72,9 +97,14 @@ public class Calculator {
         ActionListener buttonEqaul = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String answerString = Arrays.toString(yourNumbers);
-                answerString = answerString.substring(1,answerString.length()-1);
-                field.setText(answerString);
+                Integer b = new Integer(field.getText());
+                if(buffer.getNumber() != null){
+                    if(buffer.getWhichButton() == Action.PLUS){
+                        Integer result = buffer.getNumber() + b;
+                        field.setText(result.toString());
+                    }
+                }
+
 
             }
         };
