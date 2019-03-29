@@ -29,7 +29,7 @@ public class Calculator {
     }
     public  void createGUI(){
 
-        
+
 
         final Data buffer = new Data();
         final int[] сount = {0};
@@ -146,9 +146,9 @@ public class Calculator {
                     }
                     if(buffer.getWhichButton() == Action.DIVIDE){
                         Integer result = buffer.getNumber() / b;
-                        Integer ostatok = buffer.number % b;
-                        if(ostatok != 0) {
-                            field.setText(result.toString() + "," + ostatok.toString());
+                        Integer remainder = buffer.number % b;
+                        if(remainder != 0) {
+                            field.setText(result.toString() + "," + remainder.toString());
                         } else {
                             field.setText(result.toString());
                         }
@@ -159,7 +159,7 @@ public class Calculator {
                     }
                 }
 
-            
+
             }
         };
         equal.addActionListener(buttonEqaul);
