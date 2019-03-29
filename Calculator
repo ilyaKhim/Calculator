@@ -29,11 +29,10 @@ public class Calculator {
     }
     public  void createGUI(){
 
-        Integer test = null;
-        int test2 = 0;
+        
 
         final Data buffer = new Data();
-        //final int[] answer = {0};
+        final int[] сount = {0};
         // создание окна программы
         JFrame frame = new JFrame("Калькулятор");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,18 +80,56 @@ public class Calculator {
                 Integer a = new Integer(field.getText());
                 if(buffer.getNumber() == null) {
                     buffer.setNumber(a);
-                    System.out.println("first press " + buffer.getNumber());
-                } else {
-                    Integer result = a + buffer.getNumber();
-                    System.out.println("second press "  + result);
                 }
 
-                buffer.setWhichButton("+");
+                buffer.setWhichButton(Action.PLUS);
 
             }
         };
 
         addition.addActionListener(buttonPlus);
+
+        ActionListener buttonMinus = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Integer a = new Integer(field.getText());
+                if(buffer.getNumber() == null) {
+                    buffer.setNumber(a);
+                }
+
+                buffer.setWhichButton(Action.MINUS);
+            }
+        };
+
+        substraction.addActionListener(buttonMinus);
+
+        ActionListener buttonDivide = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Integer a = new Integer(field.getText());
+                if(buffer.getNumber() == null) {
+                    buffer.setNumber(a);
+                }
+
+                buffer.setWhichButton(Action.DIVIDE);
+            }
+        };
+
+        division.addActionListener(buttonDivide);
+
+        ActionListener buttonMultiply = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Integer a = new Integer(field.getText());
+                if(buffer.getNumber() == null) {
+                    buffer.setNumber(a);
+                }
+
+                buffer.setWhichButton(Action.MULTIPLY);
+            }
+        };
+
+        multiplication.addActionListener(buttonMultiply);
 
         ActionListener buttonEqaul = new ActionListener() {
             @Override
@@ -100,12 +137,29 @@ public class Calculator {
                 Integer b = new Integer(field.getText());
                 if(buffer.getNumber() != null){
                     if(buffer.getWhichButton() == Action.PLUS){
-                        Integer result = buffer.getNumber() + b;
+                        Integer result = b + buffer.getNumber();
+                        field.setText(result.toString());
+                    }
+                    if(buffer.getWhichButton() == Action.MINUS){
+                        Integer result = buffer.getNumber() - b;
+                        field.setText(result.toString());
+                    }
+                    if(buffer.getWhichButton() == Action.DIVIDE){
+                        Integer result = buffer.getNumber() / b;
+                        Integer ostatok = buffer.number % b;
+                        if(ostatok != 0) {
+                            field.setText(result.toString() + "," + ostatok.toString());
+                        } else {
+                            field.setText(result.toString());
+                        }
+                    }
+                    if(buffer.getWhichButton() == Action.MULTIPLY){
+                        Integer result = buffer.getNumber() * b;
                         field.setText(result.toString());
                     }
                 }
 
-
+            
             }
         };
         equal.addActionListener(buttonEqaul);
